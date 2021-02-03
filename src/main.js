@@ -15,6 +15,10 @@ var firebaseConfig = {
   measurementId: "G-CVE743ESLV",
 };
 
+router.beforeEach((to, from) => {
+  console.log("from page: ", from.name);
+});
+
 firebase.initializeApp(firebaseConfig);
 createApp(App)
   .use(store)

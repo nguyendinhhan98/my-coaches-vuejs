@@ -1,6 +1,6 @@
 <template>
   <my-card>
-    <form @submit.prevent="flag ? login() : register()">
+    <form @submit.prevent="flag ? login() : signup()">
       <div class="form-control">
         <label for="email">
           E-Mail
@@ -48,12 +48,15 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          // Signed in
           var user = userCredential.user;
-          console.log(user);
-          this.$store.commit("TOGGLE_AUTH");
-          this.$router.push({ name: "Coaches" });
-          localStorage.setItem("coachesID", user.uid);
+          this.$store.commit("TOGGLE_AUTH", user.uid);
+          if (this.$route.query.redirect) {
+            this.$router.push({ name: "Register" });
+          } else {
+            this.$router.push({ name: "Coaches" });
+          }
+
+          localStorage.setItem("userID", user.uid);
         })
         .catch((error) => {
           var errorCode = error.code;
@@ -62,14 +65,20 @@ export default {
           console.log("errorMessage", errorMessage);
         });
     },
-    register() {
+    signup() {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          // Signed in
           var user = userCredential.user;
-          console.log(user);
+          this.$store.commit("TOGGLE_AUTH", user.uid);
+          if (this.$route.query.redirect) {
+            this.$router.push({ name: "Register" });
+          } else {
+            this.$router.push({ name: "Coaches" });
+          }
+
+          localStorage.setItem("userID", user.uid);
         })
         .catch((error) => {
           var errorCode = error.code;
@@ -78,6 +87,9 @@ export default {
           console.log("errorMessage", errorMessage);
         });
     },
+  },
+  beforeRouteLeave(to, from) {
+    console.log("good bye!");
   },
 };
 </script>

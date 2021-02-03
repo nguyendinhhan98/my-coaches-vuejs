@@ -1,6 +1,8 @@
 <template>
   <li class="card-item">
-    <h3 class="card__name-item">{{ listItem.firstName }}</h3>
+    <h3 class="card__name-item">
+      {{ listItem.firstName + " " + listItem.lastName }}
+    </h3>
     <h4 class="card__price-item">${{ listItem.hourlyRate }}/hour</h4>
     <div class="card-badge">
       <my-badge
@@ -12,10 +14,10 @@
       </my-badge>
     </div>
     <div class="action">
-      <button-link :link="'/coaches/abc/contact'" class="outline"
+      <button-link :link="`/coaches/${listItem.id}/contact`" class="outline"
         >Contact</button-link
       >
-      <button-link :link="'/coaches/abc'">View Details</button-link>
+      <button-link :link="`/coaches/${listItem.id}`">View Details</button-link>
     </div>
   </li>
 </template>

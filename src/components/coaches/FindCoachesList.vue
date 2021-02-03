@@ -5,18 +5,26 @@
         <my-button class="outline">
           Refresh
         </my-button>
-        <template v-if="auth">
-          <button-link :link="'/register'">
-            Register as Coach
-          </button-link>
-        </template>
+        <template v-if="isRegister"> </template>
         <template v-else>
-          <button-link :link="'/auth'" :query="'register'">
-            Login to Register as Coach
-          </button-link>
+          <template v-if="auth">
+            <button-link :link="'/register'">
+              Register as Coach
+            </button-link>
+          </template>
+          <template v-else>
+            <button-link :link="'/auth'" :query="'register'">
+              Login to Register as Coach
+            </button-link>
+          </template>
         </template>
       </div>
-      <card-list></card-list>
+      <template v-if="loading">
+        <my-loading></my-loading>
+      </template>
+      <template v-else>
+        <card-list></card-list>
+      </template>
     </my-card>
   </section>
 </template>
@@ -26,11 +34,14 @@ import MyCard from "../common/MyCard";
 import CardList from "../card/CardList";
 import MyButton from "../common/MyButton";
 import ButtonLink from "../common/ButtonLink";
+import MyLoading from "../loading/MyLoading";
 import { mapState } from "vuex";
 export default {
   name: "FindCoachesList",
-  components: { MyCard, CardList, MyButton, ButtonLink },
-  computed: mapState(["auth"]),
+  components: { MyCard, CardList, MyButton, ButtonLink, MyLoading },
+  computed: {
+    ...mapState(["auth", "loading", "isRegister"]),
+  },
 };
 </script>
 

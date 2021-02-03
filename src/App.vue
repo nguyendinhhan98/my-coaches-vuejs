@@ -7,6 +7,7 @@ import TheHeading from "./components/common/TheHeading";
 export default {
   name: "App",
   components: { TheHeading },
+
 };
 </script>
 

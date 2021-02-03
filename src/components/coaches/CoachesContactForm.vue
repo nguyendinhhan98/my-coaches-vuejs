@@ -1,11 +1,12 @@
 <template>
-  <form>
+  <form @submit.prevent="sendRequest">
     <div class="form-control">
-      <label for="email">Your E-Mail</label><input type="email" id="email" />
+      <label for="email">Your E-Mail</label
+      ><input type="email" id="email" v-model="email" />
     </div>
     <div class="form-control">
       <label for="message">Message</label
-      ><textarea rows="5" id="message"></textarea>
+      ><textarea rows="5" id="message" v-model="message"></textarea>
     </div>
     <div class="actions">
       <my-button>Send Message</my-button>
@@ -15,9 +16,32 @@
 
 <script>
 import MyButton from "../common/MyButton";
+import axios from "axios";
+
 export default {
   components: { MyButton },
+  props: ["id"],
   name: "CoachesContactForm",
+  data() {
+    return {
+      email: "",
+      message: "",
+    };
+  },
+  methods: {
+    sendRequest() {
+      axios
+        .post("https://my-coaches-default-rtdb.firebaseio.com/request.json", {
+          id: this.id,
+          email: this.email,
+          message: this.message,
+        })
+        .then((response) => console.log(response.data))
+        .catch((error) => console.log(error));
+
+      this.$router.push({ name: "Coaches" });
+    },
+  },
 };
 </script>
 

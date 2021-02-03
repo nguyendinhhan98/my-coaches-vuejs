@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ path: `${link}`, query: { redirect: `${query}` } }">
+  <router-link :to="{ path: link, query: { redirect: query } }">
     <slot></slot>
   </router-link>
 </template>

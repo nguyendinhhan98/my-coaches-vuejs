@@ -1,23 +1,25 @@
 <template>
   <section>
     <my-card>
-      <h2>Dinh Han</h2>
-      <h3>$200/hour</h3>
+      <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
+      <h3>{{ listCoaches.hourlyRate }}$/hour</h3>
     </my-card>
   </section>
   <section>
     <my-card>
       <header>
         <h2>Interested? Reach out now!</h2>
-        <button-link>Contact</button-link>
-        <coaches-contact-form />
+        <button-link :link="'/contact'">Contact</button-link>
+        <coaches-contact-form :id="listCoaches.id" />
       </header>
     </my-card>
   </section>
   <section>
     <my-card>
-      <my-badge>BACKEND</my-badge>
-      <p>Welcome!</p>
+      <my-badge v-for="area in listCoaches.areas" :key="area" :area="area">
+        {{ area.toUpperCase() }}</my-badge
+      >
+      <p>{{ listCoaches.description }}</p>
     </my-card>
   </section>
 </template>
@@ -27,9 +29,29 @@ import MyCard from "../components/common/MyCard";
 import ButtonLink from "../components/common/ButtonLink";
 import MyBadge from "../components/common/MyBadge";
 import CoachesContactForm from "../components/coaches/CoachesContactForm.vue";
+import axios from "axios";
 export default {
   name: "ContacCoach",
   components: { MyCard, ButtonLink, MyBadge, CoachesContactForm },
+  data() {
+    return {
+      listCoaches: [],
+    };
+  },
+  created() {
+    axios
+      .get(
+        "https://my-coaches-default-rtdb.firebaseio.com/coaches/" +
+          this.$route.params.id +
+          ".json"
+      )
+      .then((response) => {
+        this.listCoaches = response.data;
+      });
+  },
+  beforeRouteLeave(to, from) {
+    console.log("good bye!");
+  },
 };
 </script>
 

@@ -4,6 +4,7 @@ const routes = [
   {
     path: "/",
     redirect: "/coaches",
+    name: "Coaches",
   },
   {
     path: "/coaches",
@@ -34,6 +35,11 @@ const routes = [
     path: "/request",
     name: "CoachesRequest",
     component: () => import("../components/request/CoachesRequest"),
+  },
+  {
+    path: "/:pathMath(.*)*",
+    name: "FileNotFound",
+    component: () => import("../views/FileNotFound"),
   },
 ];
 

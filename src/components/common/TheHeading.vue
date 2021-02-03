@@ -8,15 +8,20 @@
         <li class="header__menu-item">
           <router-link :to="{ name: 'Coaches' }">All Coaches</router-link>
         </li>
-        <li class="header__menu-item" v-if="auth">
-          <router-link :to="{ name: 'CoachesRequest' }">Request</router-link>
-        </li>
-        <li class="header__menu-item" v-if="auth">
-          <my-button @click="logout" :isOutline="true">Logout</my-button>
-        </li>
-        <li class="header__menu-item" v-else>
-          <router-link :to="{ name: 'Auth' }">Login</router-link>
-        </li>
+        <template v-if="checkLogin">
+          <li class="header__menu-item">
+            <router-link :to="{ name: 'CoachesRequest' }">Request</router-link>
+          </li>
+          <li class="header__menu-item">
+            <my-button @click="logout" :isOutline="true">Logout</my-button>
+          </li>
+        </template>
+
+        <template v-else>
+          <li class="header__menu-item">
+            <router-link :to="{ name: 'Auth' }">Login</router-link>
+          </li>
+        </template>
       </ul>
     </nav>
   </header>
@@ -24,15 +29,16 @@
 
 <script>
 import MyButton from "../common/MyButton";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "TheHeading",
   components: { MyButton },
-  computed: mapState(["auth"]),
+  computed: mapGetters(["checkLogin"]),
   methods: {
     logout() {
-      this.$store.commit("TOGGLE_AUTH");
-      localStorage.removeItem("coachesID");
+      // this.$store.commit("TOGGLE_AUTH");
+      // localStorage.removeItem("userID");
+      this.$store.dispatch("logout");
       this.$router.push({ name: "Coaches" });
     },
   },
