@@ -10,7 +10,6 @@
 <script>
 import MyCard from "../common/MyCard";
 import CoachesRegisterForm from "./CoachesRegisterForm";
-// import FilterCoach from "../filter/FilterCoach";
 export default {
   name: "CoachesRegister",
   components: { MyCard, CoachesRegisterForm },

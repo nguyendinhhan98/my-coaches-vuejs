@@ -6,7 +6,7 @@ export default createStore({
     areas: ["frontend", "backend", "fullstack"],
     coaches: [],
     auth: localStorage.getItem("userID") || null,
-    // loading: false,
+    loading: false,
     isRegister: false,
   },
   getters: {

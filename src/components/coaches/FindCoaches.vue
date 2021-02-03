@@ -2,9 +2,6 @@
   <section class="find__coaches">
     <my-card>
       <h2 class="card__title">Find Your Coach</h2>
-      <!-- <template v-for="area in allAreas" :key="area">
-        <filter-coach :area="area" />
-      </template> -->
       <span class="card__option">
         <input
           type="checkbox"
@@ -56,9 +53,6 @@ export default {
       return this.$store.getters.allAreas;
     },
   },
-  // created() {
-  //   this.getAreas();
-  // },
   methods: mapMutations(["FILTER_COACHES"]),
 };
 </script>

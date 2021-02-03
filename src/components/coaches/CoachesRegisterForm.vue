@@ -190,7 +190,7 @@ export default {
       } else {
         if (this.lastName.length <= 3) {
           this.errorLastName = true;
-          this.errorLastName = "lastName must be over 3 characters";
+          this.messErrorLastName = "lastName must be over 3 characters";
         } else {
           this.errorLastName = false;
         }
@@ -211,7 +211,7 @@ export default {
       }
     },
     checkHourlyRate() {
-      if (this.hourlyRate == null) {
+      if (this.hourlyRate <= 0) {
         console.log("Rate must be greater than 0.");
         this.errorHourlyRate = true;
         this.messErrorHourlyRate = "Rate must be greater than 0.";
