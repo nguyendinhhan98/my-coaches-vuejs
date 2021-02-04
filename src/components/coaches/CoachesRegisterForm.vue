@@ -156,10 +156,7 @@ export default {
             hourlyRate: this.hourlyRate,
           })
           .catch((error) => console.log(error));
-        this.$store.dispatch(
-          "postUserRegister",
-          localStorage.getItem("userID")
-        );
+       
         this.$store.commit("SET_IS_REGISTER", true);
         this.$router.push({ name: "Coaches" });
         this.$store.dispatch("getCoaches");

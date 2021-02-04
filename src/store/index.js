@@ -51,26 +51,21 @@ export default createStore({
 
     async getUserRegister({ commit }) {
       try {
-        const response = await axios.get(
-          "https://my-coaches-default-rtdb.firebaseio.com/register.json"
-        );
-        let temp = [];
-        for (let i = 0; i < Object.values(response.data).length; i++) {
-          temp.push(Object.values(Object.values(response.data)[i])[0]);
-        }
-        commit("CHECK_USER_REGISTER", temp);
+        axios
+          .get("https://my-coaches-default-rtdb.firebaseio.com/coaches.json")
+          .then((response) => {
+            let temp = [];
+            for (let i = 0; i < Object.values(response.data).length; i++) {
+              temp.push(Object.values(response.data)[i].id);
+            }
+            commit("CHECK_USER_REGISTER", temp);
+          })
+          .catch((error) => console.log(error));
       } catch (error) {
         console.log(error);
       }
     },
 
-    postUserRegister({ commit }, userID) {
-      axios
-        .post("https://my-coaches-default-rtdb.firebaseio.com/register.json", {
-          id: userID,
-        })
-        .catch((error) => console.log(error));
-    },
     logout({ commit }) {
       localStorage.removeItem("userID");
       commit("SET_IS_REGISTER", false);

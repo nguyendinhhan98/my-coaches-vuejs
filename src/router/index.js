@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
 
 const routes = [
   {
@@ -29,11 +30,23 @@ const routes = [
     path: "/register",
     name: "Register",
     component: () => import("../components/coaches/CoachesRegister"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.isRegister) {
+        next("/notification-register");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/request",
     name: "CoachesRequest",
     component: () => import("../components/request/CoachesRequest"),
+  },
+  {
+    path: "/notification-register",
+    name: "NotificationRegister",
+    component: () => import("../views/NotificationRegister"),
   },
   {
     path: "/:pathMath(.*)*",

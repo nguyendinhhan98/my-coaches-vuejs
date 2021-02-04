@@ -27,8 +27,7 @@
       </template>
     </form>
 
-      <error-auth ></error-auth>
-
+    <error-auth></error-auth>
   </my-card>
 </template>
 
@@ -57,6 +56,7 @@ export default {
         this.checkValid = true;
       } else {
         this.$store.commit("SET_OPEN_DIALOG", true);
+        this.$store.commit("SET_AUTHEN_DIALOG", true);
         this.$store.commit("SET_LOADING_DIALOG", true);
         let url = this.$route.query.redirect;
         firebase
@@ -75,6 +75,7 @@ export default {
         this.checkValid = true;
       } else {
         this.$store.commit("SET_OPEN_DIALOG", true);
+        this.$store.commit("SET_AUTHEN_DIALOG", true);
         this.$store.commit("SET_LOADING_DIALOG", true);
         let url = this.$route.query.redirect;
         firebase
@@ -157,5 +158,4 @@ p {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
-
 </style>
