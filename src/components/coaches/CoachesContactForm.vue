@@ -36,7 +36,6 @@ export default {
           email: this.email,
           message: this.message,
         })
-        .then((response) => console.log(response.data))
         .catch((error) => console.log(error));
 
       this.$router.push({ name: "Coaches" });

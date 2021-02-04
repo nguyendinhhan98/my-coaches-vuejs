@@ -2,7 +2,7 @@
   <section>
     <my-card>
       <div class="controls">
-        <my-button class="outline">
+        <my-button class="outline" @click="$store.dispatch('getCoaches')">
           Refresh
         </my-button>
         <template v-if="isRegister"> </template>
@@ -41,6 +41,10 @@ export default {
   components: { MyCard, CardList, MyButton, ButtonLink, MyLoading },
   computed: {
     ...mapState(["auth", "loading", "isRegister"]),
+  },
+  created() {
+    this.$store.dispatch("getCoaches");
+    this.$store.dispatch("getUserRegister");
   },
 };
 </script>

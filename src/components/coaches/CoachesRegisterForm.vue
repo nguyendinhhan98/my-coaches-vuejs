@@ -150,7 +150,6 @@ export default {
             lastName: this.lastName,
             hourlyRate: this.hourlyRate,
           })
-          .then((response) => console.log(response.data))
           .catch((error) => console.log(error));
         this.$store.dispatch(
           "postUserRegister",

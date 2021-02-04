@@ -4,33 +4,43 @@
       <header>
         <h2>Requests Received</h2>
       </header>
-      <h3 v-if="request.length == 0">
-        You haven't received any requests yet!
-      </h3>
-      <ul v-else v-for="req in request" :key="req">
-        <li>
-          <div>
-            <a>{{ req.email }}</a>
-          </div>
-          <p>{{ req.message }}</p>
-        </li>
-      </ul>
+      <template v-if="loading">
+        <my-loading></my-loading>
+      </template>
+      <template v-else>
+        <h3 v-if="request.length == 0">
+          You haven't received any requests yet!
+        </h3>
+        <ul v-else v-for="req in request" :key="req">
+          <li>
+            <div>
+              <a :href="`mailto:${req.email}`">{{ req.email }}</a>
+            </div>
+            <p>{{ req.message }}</p>
+          </li>
+        </ul>
+      </template>
     </my-card>
   </section>
 </template>
 
 <script>
 import MyCard from "../common/MyCard";
+import MyLoading from "../loading/MyLoading";
 import axios from "axios";
+import { mapMutations, mapState } from "vuex";
 export default {
-  components: { MyCard },
+  components: { MyCard, MyLoading },
   name: "CoachesRequest",
   data() {
     return {
       request: [],
     };
   },
+  computed: { ...mapState(["loading"]) },
+
   created() {
+    this.$store.commit("SET_LOADING", true);
     axios
       .get("https://my-coaches-default-rtdb.firebaseio.com/request.json")
       .then((response) => {
@@ -41,6 +51,7 @@ export default {
             this.request.push(Object.values(response.data)[i]);
           }
         }
+        this.$store.commit("SET_LOADING", false);
       })
       .catch((error) => console.log(error));
   },

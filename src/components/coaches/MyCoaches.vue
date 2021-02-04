@@ -1,6 +1,8 @@
 <template>
-  <find-coaches />
-  <find-coaches-list />
+  <div>
+    <find-coaches />
+    <find-coaches-list />
+  </div>
 </template>
 
 <script>

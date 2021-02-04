@@ -1,26 +1,28 @@
 <template>
-  <section>
-    <my-card>
-      <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
-      <h3>{{ listCoaches.hourlyRate }}$/hour</h3>
-    </my-card>
-  </section>
-  <section>
-    <my-card>
-      <header>
-        <h2>Interested? Reach out now!</h2>
-        <button-link :link="'/contact'">Contact</button-link>
-      </header>
-    </my-card>
-  </section>
-  <section>
-    <my-card>
-      <my-badge v-for="area in listCoaches.areas" :key="area" :area="area">{{
-        area.toUpperCase()
-      }}</my-badge>
-      <p>{{ listCoaches.description }}</p>
-    </my-card>
-  </section>
+  <div>
+    <section>
+      <my-card>
+        <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
+        <h3>{{ listCoaches.hourlyRate }}$/hour</h3>
+      </my-card>
+    </section>
+    <section>
+      <my-card>
+        <header>
+          <h2>Interested? Reach out now!</h2>
+          <button-link :link="'/contact'">Contact</button-link>
+        </header>
+      </my-card>
+    </section>
+    <section>
+      <my-card>
+        <my-badge v-for="area in listCoaches.areas" :key="area" :area="area">{{
+          area.toUpperCase()
+        }}</my-badge>
+        <p>{{ listCoaches.description }}</p>
+      </my-card>
+    </section>
+  </div>
 </template>
 
 <script>

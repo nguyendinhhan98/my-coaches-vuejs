@@ -26,6 +26,7 @@ export default createStore({
   },
   actions: {
     async getCoaches({ commit }) {
+      commit("SET_LOADING", true);
       const resCoaches = [];
       try {
         const response = await axios.get(
@@ -38,6 +39,7 @@ export default createStore({
           resCoaches.push(temp);
         }
         commit("SET_COACHES", resCoaches);
+        commit("SET_LOADING", false);
       } catch (error) {
         console.log(error);
       }
@@ -57,12 +59,12 @@ export default createStore({
         console.log(error);
       }
     },
+
     postUserRegister({ commit }, userID) {
       axios
         .post("https://my-coaches-default-rtdb.firebaseio.com/register.json", {
           id: userID,
         })
-        .then((response) => console.log(response.data))
         .catch((error) => console.log(error));
     },
     logout({ commit }) {
@@ -84,6 +86,10 @@ export default createStore({
 
     SET_IS_REGISTER(state, payload) {
       state.isRegister = payload;
+    },
+
+    SET_LOADING(state, payload) {
+      state.loading = payload;
     },
 
     CHECK_USER_REGISTER(state, listUserRegister) {
