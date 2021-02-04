@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createStore } from "vuex";
+import router from "../router";
 
 export default createStore({
   state: {
@@ -74,6 +75,29 @@ export default createStore({
       localStorage.removeItem("userID");
       commit("SET_IS_REGISTER", false);
       commit("TOGGLE_AUTH", null);
+    },
+    loginAndSignup({ commit }, payload) {
+      var user = payload.userCredential.user;
+      commit("TOGGLE_AUTH", user.uid);
+      localStorage.setItem("userID", user.uid);
+      setTimeout(() => {
+        commit("SET_OPEN_DIALOG", false);
+        commit("SET_LOADING_DIALOG", false);
+        if (payload.url) {
+          router.push({ name: "Register" });
+        } else {
+          router.push({ name: "Coaches" });
+        }
+      }, 500);
+    },
+    errorLoginAndSignup({ commit }) {
+      commit("SET_OPEN_DIALOG", true);
+      commit("SET_AUTHEN_DIALOG", true);
+      commit("SET_LOADING_DIALOG", true);
+      setTimeout(() => {
+        commit("SET_AUTHEN_DIALOG", false);
+        commit("SET_LOADING_DIALOG", false);
+      }, 500);
     },
   },
   mutations: {

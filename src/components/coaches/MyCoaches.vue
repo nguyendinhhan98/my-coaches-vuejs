@@ -13,7 +13,7 @@ export default {
   created() {
     this.$store.dispatch("getUserRegister");
   },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };

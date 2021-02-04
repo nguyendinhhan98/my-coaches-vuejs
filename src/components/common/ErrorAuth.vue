@@ -134,11 +134,11 @@ button {
 }
 
 .dialog-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.5s;
 }
 
 .dialog-leave-active {
-  transition: all 0.3s ease-in;
+  transition: all 0.5s;
 }
 
 .dialog-enter-to,

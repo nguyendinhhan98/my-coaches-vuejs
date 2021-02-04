@@ -47,10 +47,9 @@ export default {
       )
       .then((response) => {
         this.listCoaches = response.data;
-        console.log("response", this.listCoaches);
       });
   },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };

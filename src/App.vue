@@ -1,7 +1,7 @@
 <template>
   <the-heading />
   <router-view v-slot="{ Component }">
-    <transition name="moveUp" mode="out-in">
+    <transition name="animate" mode="out-in">
       <component :is="Component"></component>
     </transition>
   </router-view>
@@ -31,39 +31,28 @@ html {
   outline: none;
 }
 
-.moveUp-leave-active {
-  animation: moveUp 0.4s ease-in;
-}
-
-@keyframes moveUp {
-  0% {
-    transform: translatey(0px);
-  }
-  100% {
-    transform: translateY(80px);
-  }
-}
-*/ .moveUp-enter-from {
+.animate-enter-from {
+  transform: translateY(-50px);
+  transition: 0.3s;
   opacity: 0;
-  transform: translateY(-30px);
 }
-
-.moveUp-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.moveUp-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.moveUp-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.moveUp-enter-to,
-.moveUp-leave-from {
-  opacity: 1;
+.animate-enter-to {
   transform: translateY(0);
+  transition: 0.3s;
+  opacity: 1;
+}
+.animate-enter-active {
+  transition-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.animate-leave-from {
+  transform: translateY(0px);
+  transition: 0.3s;
+  opacity: 1;
+}
+.animate-leave-to {
+  transform: translateY(50px);
+  transition: 0.3s;
+  opacity: 0;
 }
 </style>

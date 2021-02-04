@@ -26,7 +26,9 @@
         <button class="flat" @click.prevent="toggle">Login instead</button>
       </template>
     </form>
-    <error-auth></error-auth>
+
+      <error-auth ></error-auth>
+
   </my-card>
 </template>
 
@@ -54,33 +56,17 @@ export default {
       if (this.email == "" || this.password == "") {
         this.checkValid = true;
       } else {
+        this.$store.commit("SET_OPEN_DIALOG", true);
+        this.$store.commit("SET_LOADING_DIALOG", true);
+        let url = this.$route.query.redirect;
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then((userCredential) => {
-            this.$store.commit("SET_OPEN_DIALOG", true);
-            this.$store.commit("SET_LOADING_DIALOG", true);
-            var user = userCredential.user;
-            this.$store.commit("TOGGLE_AUTH", user.uid);
-            localStorage.setItem("userID", user.uid);
-            setTimeout(() => {
-              if (this.$route.query.redirect) {
-                this.$router.push({ name: "Register" });
-              } else {
-                this.$router.push({ name: "Coaches" });
-              }
-              this.$store.commit("SET_OPEN_DIALOG", false);
-              this.$store.commit("SET_LOADING_DIALOG", false);
-            }, 700);
+            this.$store.dispatch("loginAndSignup", { userCredential, url });
           })
-          .catch((error) => {
-            this.$store.commit("SET_OPEN_DIALOG", true);
-            this.$store.commit("SET_AUTHEN_DIALOG", true);
-            this.$store.commit("SET_LOADING_DIALOG", true);
-            setTimeout(() => {
-              this.$store.commit("SET_AUTHEN_DIALOG", false);
-              this.$store.commit("SET_LOADING_DIALOG", true);
-            }, 700);
+          .catch(() => {
+            this.$store.dispatch("errorLoginAndSignup");
           });
       }
     },
@@ -88,38 +74,22 @@ export default {
       if (this.email == "" || this.password == "") {
         this.checkValid = true;
       } else {
+        this.$store.commit("SET_OPEN_DIALOG", true);
+        this.$store.commit("SET_LOADING_DIALOG", true);
+        let url = this.$route.query.redirect;
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then((userCredential) => {
-            this.$store.commit("SET_OPEN_DIALOG", true);
-            this.$store.commit("SET_LOADING_DIALOG", true);
-            var user = userCredential.user;
-            this.$store.commit("TOGGLE_AUTH", user.uid);
-            localStorage.setItem("userID", user.uid);
-            setTimeout(() => {
-              if (this.$route.query.redirect) {
-                this.$router.push({ name: "Register" });
-              } else {
-                this.$router.push({ name: "Coaches" });
-              }
-              this.$store.commit("SET_OPEN_DIALOG", false);
-              this.$store.commit("SET_LOADING_DIALOG", false);
-            }, 500);
+            this.$store.dispatch("loginAndSignup", { userCredential, url });
           })
-          .catch((error) => {
-            this.$store.commit("SET_OPEN_DIALOG", true);
-            this.$store.commit("SET_AUTHEN_DIALOG", true);
-            this.$store.commit("SET_LOADING_DIALOG", true);
-            setTimeout(() => {
-              this.$store.commit("SET_AUTHEN_DIALOG", false);
-              this.$store.commit("SET_LOADING_DIALOG", false);
-            }, 500);
+          .catch(() => {
+            this.$store.dispatch("errorLoginAndSignup");
           });
       }
     },
   },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };
@@ -187,4 +157,5 @@ p {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
+
 </style>

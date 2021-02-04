@@ -13,7 +13,7 @@ import CoachesRegisterForm from "./CoachesRegisterForm";
 export default {
   name: "CoachesRegister",
   components: { MyCard, CoachesRegisterForm },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };

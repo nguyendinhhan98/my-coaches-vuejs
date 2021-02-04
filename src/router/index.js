@@ -4,7 +4,6 @@ const routes = [
   {
     path: "/",
     redirect: "/coaches",
-    name: "Coaches",
   },
   {
     path: "/coaches",

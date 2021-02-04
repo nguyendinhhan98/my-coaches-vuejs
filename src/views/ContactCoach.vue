@@ -51,7 +51,7 @@ export default {
         this.listCoaches = response.data;
       });
   },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };

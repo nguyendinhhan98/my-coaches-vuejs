@@ -55,7 +55,7 @@ export default {
       })
       .catch((error) => console.log(error));
   },
-  beforeRouteLeave(to, from) {
+  beforeRouteLeave() {
     console.log("good bye!");
   },
 };
