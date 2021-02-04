@@ -22,16 +22,18 @@
         <button class="flat" @click.prevent="toggle">Login instead</button>
       </template>
     </form>
+    <error-auth></error-auth>
   </my-card>
 </template>
 
 <script>
 import MyCard from "../common/MyCard";
+import ErrorAuth from "../common/ErrorAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
 export default {
   name: "Login",
-  components: { MyCard },
+  components: { MyCard, ErrorAuth },
   data() {
     return {
       flag: true,
@@ -59,10 +61,11 @@ export default {
           localStorage.setItem("userID", user.uid);
         })
         .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log("errorCode", errorCode);
-          console.log("errorMessage", errorMessage);
+          this.$store.commit("SET_OPEN_DIALOG", true);
+          this.$store.commit("SET_AUTHEN_DIALOG", true);
+          setTimeout(() => {
+            this.$store.commit("SET_AUTHEN_DIALOG", false);
+          }, 500);
         });
     },
     signup() {
@@ -81,10 +84,11 @@ export default {
           localStorage.setItem("userID", user.uid);
         })
         .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log("errorCode", errorCode);
-          console.log("errorMessage", errorMessage);
+          this.$store.commit("SET_OPEN_DIALOG", true);
+          this.$store.commit("SET_AUTHEN_DIALOG", true);
+          setTimeout(() => {
+            this.$store.commit("SET_AUTHEN_DIALOG", false);
+          }, 500);
         });
     },
   },
