@@ -40,12 +40,11 @@ export default {
   name: "FindCoachesList",
   components: { MyCard, CardList, MyButton, ButtonLink, MyLoading },
   computed: {
-    ...mapState(["auth", "loading", "isRegister"]),
+    ...mapState(["auth", "loading", "isRegister", "isFindCoaches"]),
   },
   created() {
     this.$store.dispatch("getCoaches");
     this.$store.dispatch("getUserRegister");
-    
   },
 };
 </script>

@@ -1,6 +1,16 @@
 <template>
-  <ul class="card-list" v-for="list in allList" :key="list.id">
-    <card-item :listItem="list"></card-item>
+  <h2
+    class="center"
+    v-if="allList.length == 0 || $store.state.coaches.length == 0"
+  >
+    No Coaches Found!
+  </h2>
+  <ul v-else class="card-list">
+    <card-item
+      v-for="list in allList"
+      :key="list.id"
+      :listItem="list"
+    ></card-item>
   </ul>
 </template>
 
@@ -17,10 +27,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-list {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.center {
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

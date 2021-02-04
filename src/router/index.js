@@ -31,7 +31,7 @@ const routes = [
     name: "Register",
     component: () => import("../components/coaches/CoachesRegister"),
     beforeEnter: (to, from, next) => {
-      if (!store.state.isRegister) {
+      if (store.state.isRegister == true) {
         next("/notification-register");
       } else {
         next();

@@ -8,6 +8,7 @@ export default createStore({
     coaches: [],
     auth: localStorage.getItem("userID") || null,
     loading: false,
+    isFindCoaches: false,
     isRegister: false,
     openDialog: false,
     authenDialog: false,
@@ -36,11 +37,16 @@ export default createStore({
         const response = await axios.get(
           "https://my-coaches-default-rtdb.firebaseio.com/coaches.json"
         );
-        let obj = Object.values(response.data);
-        for (let i = 0; i < obj.length; i++) {
-          let id = { id: Object.keys(response.data)[i] };
-          let temp = Object.assign(obj[i], id);
-          resCoaches.push(temp);
+        if (response.data == null) {
+          commit("SET_FIND_COACHES", false);
+        } else {
+          commit("SET_FIND_COACHES", true);
+          let obj = Object.values(response.data);
+          for (let i = 0; i < obj.length; i++) {
+            let id = { id: Object.keys(response.data)[i] };
+            let temp = Object.assign(obj[i], id);
+            resCoaches.push(temp);
+          }
         }
         commit("SET_COACHES", resCoaches);
         commit("SET_LOADING", false);
@@ -55,8 +61,10 @@ export default createStore({
           .get("https://my-coaches-default-rtdb.firebaseio.com/coaches.json")
           .then((response) => {
             let temp = [];
-            for (let i = 0; i < Object.values(response.data).length; i++) {
-              temp.push(Object.values(response.data)[i].id);
+            if (response.data) {
+              for (let i = 0; i < Object.values(response.data).length; i++) {
+                temp.push(Object.values(response.data)[i].id);
+              }
             }
             commit("CHECK_USER_REGISTER", temp);
           })
@@ -112,6 +120,10 @@ export default createStore({
 
     SET_LOADING(state, payload) {
       state.loading = payload;
+    },
+
+    SET_FIND_COACHES(state, payload) {
+      state.isFindCoaches = payload;
     },
 
     SET_OPEN_DIALOG(state, payload) {
