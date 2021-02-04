@@ -134,12 +134,17 @@ export default {
   },
   methods: {
     register() {
+      this.checkFirstName();
+      this.checkLastName();
+      this.checkDescription();
+      this.checkHourlyRate();
+      this.checkAreas();
       if (
-        (this.errorFirstName &&
-          this.errorLastName &&
-          this.errorDescription &&
-          this.errorHourlyRate &&
-          this.errorAreas) == false
+        !this.errorFirstName &&
+        !this.errorLastName &&
+        !this.errorDescription &&
+        !this.errorHourlyRate &&
+        !this.errorAreas
       ) {
         axios
           .post("https://my-coaches-default-rtdb.firebaseio.com/coaches.json", {
@@ -160,11 +165,6 @@ export default {
         this.$store.dispatch("getCoaches");
       } else {
         this.errorGeneral = true;
-        this.checkFirstName();
-        this.checkLastName();
-        this.checkDescription();
-        this.checkHourlyRate();
-        this.checkAreas();
       }
     },
     checkFirstName() {

@@ -8,8 +8,9 @@ export default createStore({
     auth: localStorage.getItem("userID") || null,
     loading: false,
     isRegister: false,
-    openDialog: true,
+    openDialog: false,
     authenDialog: false,
+    loadingDialog: false,
   },
   getters: {
     allCoaches: (state) => {
@@ -100,6 +101,10 @@ export default createStore({
 
     SET_AUTHEN_DIALOG(state, payload) {
       state.authenDialog = payload;
+    },
+
+    SET_LOADING_DIALOG(state, payload) {
+      state.loadingDialog = payload;
     },
 
     CHECK_USER_REGISTER(state, listUserRegister) {

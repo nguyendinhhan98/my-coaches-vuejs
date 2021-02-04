@@ -13,6 +13,10 @@
         </label>
         <input type="password" id="password" v-model="password" />
       </div>
+      <p v-if="checkValid">
+        Please enter a valid email and password (must be at least 6 characters
+        long).
+      </p>
       <template v-if="flag">
         <button type="submit">Login</button>
         <button class="flat" @click.prevent="toggle">Signup instead</button>
@@ -39,6 +43,7 @@ export default {
       flag: true,
       email: "",
       password: "",
+      checkValid: false,
     };
   },
   methods: {
@@ -46,50 +51,72 @@ export default {
       this.flag = !this.flag;
     },
     login() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then((userCredential) => {
-          var user = userCredential.user;
-          this.$store.commit("TOGGLE_AUTH", user.uid);
-          if (this.$route.query.redirect) {
-            this.$router.push({ name: "Register" });
-          } else {
-            this.$router.push({ name: "Coaches" });
-          }
-
-          localStorage.setItem("userID", user.uid);
-        })
-        .catch((error) => {
-          this.$store.commit("SET_OPEN_DIALOG", true);
-          this.$store.commit("SET_AUTHEN_DIALOG", true);
-          setTimeout(() => {
-            this.$store.commit("SET_AUTHEN_DIALOG", false);
-          }, 500);
-        });
+      if (this.email == "" || this.password == "") {
+        this.checkValid = true;
+      } else {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then((userCredential) => {
+            this.$store.commit("SET_OPEN_DIALOG", true);
+            this.$store.commit("SET_LOADING_DIALOG", true);
+            var user = userCredential.user;
+            this.$store.commit("TOGGLE_AUTH", user.uid);
+            localStorage.setItem("userID", user.uid);
+            setTimeout(() => {
+              if (this.$route.query.redirect) {
+                this.$router.push({ name: "Register" });
+              } else {
+                this.$router.push({ name: "Coaches" });
+              }
+              this.$store.commit("SET_OPEN_DIALOG", false);
+              this.$store.commit("SET_LOADING_DIALOG", false);
+            }, 700);
+          })
+          .catch((error) => {
+            this.$store.commit("SET_OPEN_DIALOG", true);
+            this.$store.commit("SET_AUTHEN_DIALOG", true);
+            this.$store.commit("SET_LOADING_DIALOG", true);
+            setTimeout(() => {
+              this.$store.commit("SET_AUTHEN_DIALOG", false);
+              this.$store.commit("SET_LOADING_DIALOG", true);
+            }, 700);
+          });
+      }
     },
     signup() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userCredential) => {
-          var user = userCredential.user;
-          this.$store.commit("TOGGLE_AUTH", user.uid);
-          if (this.$route.query.redirect) {
-            this.$router.push({ name: "Register" });
-          } else {
-            this.$router.push({ name: "Coaches" });
-          }
-
-          localStorage.setItem("userID", user.uid);
-        })
-        .catch((error) => {
-          this.$store.commit("SET_OPEN_DIALOG", true);
-          this.$store.commit("SET_AUTHEN_DIALOG", true);
-          setTimeout(() => {
-            this.$store.commit("SET_AUTHEN_DIALOG", false);
-          }, 500);
-        });
+      if (this.email == "" || this.password == "") {
+        this.checkValid = true;
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then((userCredential) => {
+            this.$store.commit("SET_OPEN_DIALOG", true);
+            this.$store.commit("SET_LOADING_DIALOG", true);
+            var user = userCredential.user;
+            this.$store.commit("TOGGLE_AUTH", user.uid);
+            localStorage.setItem("userID", user.uid);
+            setTimeout(() => {
+              if (this.$route.query.redirect) {
+                this.$router.push({ name: "Register" });
+              } else {
+                this.$router.push({ name: "Coaches" });
+              }
+              this.$store.commit("SET_OPEN_DIALOG", false);
+              this.$store.commit("SET_LOADING_DIALOG", false);
+            }, 500);
+          })
+          .catch((error) => {
+            this.$store.commit("SET_OPEN_DIALOG", true);
+            this.$store.commit("SET_AUTHEN_DIALOG", true);
+            this.$store.commit("SET_LOADING_DIALOG", true);
+            setTimeout(() => {
+              this.$store.commit("SET_AUTHEN_DIALOG", false);
+              this.$store.commit("SET_LOADING_DIALOG", false);
+            }, 500);
+          });
+      }
     },
   },
   beforeRouteLeave(to, from) {
@@ -151,5 +178,13 @@ button {
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 </style>

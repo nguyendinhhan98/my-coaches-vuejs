@@ -11,7 +11,7 @@
         </template>
       </header>
       <section>
-        <template v-if="authenDialog">
+        <template v-if="loadingDialog">
           <my-loading></my-loading>
         </template>
         <template v-else>
@@ -33,7 +33,7 @@ import { mapState } from "vuex";
 export default {
   name: "ErrorAuth",
   components: { MyLoading },
-  computed: mapState(["openDialog", "authenDialog"]),
+  computed: mapState(["openDialog", "authenDialog", "loadingDialog"]),
   methods: {
     closeDialog() {
       this.$store.commit("SET_OPEN_DIALOG", false);

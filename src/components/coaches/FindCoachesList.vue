@@ -45,6 +45,7 @@ export default {
   created() {
     this.$store.dispatch("getCoaches");
     this.$store.dispatch("getUserRegister");
+    
   },
 };
 </script>
