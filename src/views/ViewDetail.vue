@@ -10,7 +10,9 @@
       <my-card>
         <header>
           <h2>Interested? Reach out now!</h2>
-          <button-link :link="'/contact'">Contact</button-link>
+          <button-link :link="`${$route.params.id}/contact`"
+            >Contact</button-link
+          >
         </header>
       </my-card>
     </section>

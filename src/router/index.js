@@ -31,10 +31,10 @@ const routes = [
     name: "Register",
     component: () => import("../components/coaches/CoachesRegister"),
     beforeEnter: (to, from, next) => {
-      if (store.state.isRegister == true) {
-        next("/notification-register");
-      } else {
+      if (store.state.auth != null) {
         next();
+      } else {
+        next("/auth");
       }
     },
   },
@@ -42,11 +42,6 @@ const routes = [
     path: "/request",
     name: "CoachesRequest",
     component: () => import("../components/request/CoachesRequest"),
-  },
-  {
-    path: "/notification-register",
-    name: "NotificationRegister",
-    component: () => import("../views/NotificationRegister"),
   },
   {
     path: "/:pathMath(.*)*",
@@ -58,6 +53,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    return { top: 0 };
+  },
 });
 
 export default router;

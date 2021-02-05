@@ -16,6 +16,9 @@ export default {
   beforeRouteLeave() {
     console.log("good bye!");
   },
+  created() {
+    this.$store.dispatch("getUserRegister");
+  },
 };
 </script>
 

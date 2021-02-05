@@ -28,7 +28,7 @@
 import MyCard from "../common/MyCard";
 import MyLoading from "../loading/MyLoading";
 import axios from "axios";
-import { mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   components: { MyCard, MyLoading },
   name: "CoachesRequest",
@@ -44,6 +44,9 @@ export default {
     axios
       .get("https://my-coaches-default-rtdb.firebaseio.com/request.json")
       .then((response) => {
+        setTimeout(() => {
+          this.$store.commit("SET_LOADING", false);
+        }, 700);
         for (let i = 0; i < Object.values(response.data).length; i++) {
           if (
             Object.values(response.data)[i].id == localStorage.getItem("userID")
@@ -51,9 +54,8 @@ export default {
             this.request.push(Object.values(response.data)[i]);
           }
         }
-        this.$store.commit("SET_LOADING", false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   },
   beforeRouteLeave() {
     console.log("good bye!");

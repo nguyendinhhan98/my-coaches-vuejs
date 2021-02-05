@@ -156,7 +156,6 @@ export default {
             hourlyRate: this.hourlyRate,
           })
           .catch((error) => console.log(error));
-       
         this.$store.commit("SET_IS_REGISTER", true);
         this.$router.push({ name: "Coaches" });
         this.$store.dispatch("getCoaches");
@@ -208,7 +207,6 @@ export default {
     },
     checkHourlyRate() {
       if (this.hourlyRate <= 0) {
-        console.log("Rate must be greater than 0.");
         this.errorHourlyRate = true;
         this.messErrorHourlyRate = "Rate must be greater than 0.";
       } else {

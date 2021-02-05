@@ -5,6 +5,7 @@
   >
     No Coaches Found!
   </h2>
+
   <ul v-else class="card-list">
     <card-item
       v-for="list in allList"

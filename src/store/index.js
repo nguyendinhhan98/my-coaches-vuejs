@@ -49,7 +49,9 @@ export default createStore({
           }
         }
         commit("SET_COACHES", resCoaches);
-        commit("SET_LOADING", false);
+        setTimeout(() => {
+          commit("SET_LOADING", false);
+        }, 700);
       } catch (error) {
         console.log(error);
       }
@@ -104,14 +106,14 @@ export default createStore({
     },
   },
   mutations: {
-    SET_COACHES(state, coaches) {
-      state.coaches = coaches;
+    SET_COACHES(state, payload) {
+      state.coaches = payload;
     },
     TOGGLE_AUTH(state, payload) {
       state.auth = payload;
     },
-    FILTER_COACHES(state, areas) {
-      state.areas = areas;
+    FILTER_COACHES(state, payload) {
+      state.areas = payload;
     },
 
     SET_IS_REGISTER(state, payload) {
@@ -138,9 +140,9 @@ export default createStore({
       state.loadingDialog = payload;
     },
 
-    CHECK_USER_REGISTER(state, listUserRegister) {
+    CHECK_USER_REGISTER(state, payload) {
       if (state.auth != null) {
-        if (listUserRegister.indexOf(state.auth) != -1) {
+        if (payload.indexOf(state.auth) != -1) {
           state.isRegister = true;
         } else {
           state.isRegister = false;

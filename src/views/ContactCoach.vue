@@ -10,7 +10,7 @@
       <my-card>
         <header>
           <h2>Interested? Reach out now!</h2>
-          <button-link :link="'/contact'">Contact</button-link>
+          <button-link :link="'#'">Contact</button-link>
           <coaches-contact-form :id="listCoaches.id" />
         </header>
       </my-card>

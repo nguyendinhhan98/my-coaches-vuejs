@@ -42,10 +42,6 @@ export default {
   computed: {
     ...mapState(["auth", "loading", "isRegister", "isFindCoaches"]),
   },
-  created() {
-    this.$store.dispatch("getCoaches");
-    this.$store.dispatch("getUserRegister");
-  },
 };
 </script>
 

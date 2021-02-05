@@ -11,6 +11,7 @@ import FindCoachesList from "./FindCoachesList";
 export default {
   components: { FindCoaches, FindCoachesList },
   created() {
+    this.$store.dispatch("getCoaches");
     this.$store.dispatch("getUserRegister");
   },
   beforeRouteLeave() {
